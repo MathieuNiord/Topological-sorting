@@ -6,11 +6,19 @@
 | are defined.                          |
  --------------------------------------- */
 
+import java.util.Scanner;
+
 public class Utils {
 
-    static int getIntegerInput() {
-        // TODO : get integer input
-        return 0;
-    }
+    //Scanner for user's inputs
+    public static final Scanner SCANNER = new Scanner(System.in);
 
+    static int getIntegerInput() {
+        try {
+            return SCANNER.nextInt();
+        }
+        catch (Exception e){
+            return getIntegerInput();
+        }
+    }
 }
