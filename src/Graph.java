@@ -6,6 +6,8 @@
 | and a bounded array of vertices.       |
  ---------------------------------------- */
 
+import java.util.Arrays;
+
 public class Graph {
 
     // --- Attributes ---
@@ -41,8 +43,9 @@ public class Graph {
     // --- Display ---
     @Override
     public String toString() {
-        // TODO : toString
-        return "";
+        return "Graph{" +
+                "order_=" + order_ +
+                ", vertices_=" + Arrays.toString(vertices_) +
+                '}';
     }
-
 }
