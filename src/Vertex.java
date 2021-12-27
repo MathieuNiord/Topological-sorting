@@ -46,4 +46,13 @@ public class Vertex {
 
     // --- Display ---
 
+
+    @Override
+    public String toString() {
+        return "Vertex{" +
+                "name_=" + name_ +
+                ", neighbors_=" + neighbors_ +
+                ", state_=" + state_ +
+                '}';
+    }
 }
