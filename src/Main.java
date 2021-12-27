@@ -27,6 +27,14 @@ public class Main {
             4. Topological sorting [PROCESSING]
             5. Display different results [DISPLAYING]
         */
+
+        //1. Get graph's order [READING]
+        System.out.print("Order of the graph : ");
+        int graphOrder = Utils.getIntegerInput();
+
+        //2. Instantiate the graph [PROCESSING]
+        Graph graph = new Graph(graphOrder);
+
     }
 
 }
