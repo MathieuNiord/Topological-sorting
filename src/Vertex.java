@@ -6,53 +6,63 @@
 | (here represented by an integer, a vertex list,     |
 | and an enumerated type).                            |
  ----------------------------------------------------- */
-
-import java.util.ArrayList;
-
 public class Vertex {
 
     // --- Attributes ---
-    private final int name_;
-    private final ArrayList<Vertex> neighbors_;
-    private State state_;
+    private final int name;
+    private final MyLinkedList<Vertex> neighbors;
+    private State state;
+    private Vertex dad;
 
     // --- Constructor ---
     public Vertex(int name) {
-        this.name_ = name;
-        this.neighbors_ = new ArrayList<>();
-        this.state_ = State.GREEN;
+        this.name = name;
+        this.neighbors = new MyLinkedList<>();
+        this.state = State.GREEN;
     }
 
     // --- Getters ---
     public int getName() {
-        return name_;
+        return name;
     }
-    public ArrayList<Vertex> getNeighbors() {
-        return neighbors_;
+    public MyLinkedList<Vertex> getNeighbors() {
+        return neighbors;
     }
     public State getState() {
-        return state_;
+        return state;
+    }
+
+    public Vertex getDad() {
+        return dad;
     }
 
     // --- Setters ---
-    public void addNeighbor(Vertex neighbor) {
-        this.neighbors_.add(neighbor);
-    }
     public void setState(State state_) {
-        this.state_ = state_;
+        this.state = state_;
+    }
+
+    public void setDad(Vertex dad) {
+        this.dad = dad;
     }
 
     // --- Others ---
-
+    public void addSuccessor(Vertex successor){
+        neighbors.addTail(successor);
+    }
     // --- Display ---
-
 
     @Override
     public String toString() {
-        return "Vertex{" +
-                "name_=" + name_ +
-                ", neighbors_=" + neighbors_ +
-                ", state_=" + state_ +
-                '}';
+
+        String neighbors = "";
+
+        for(Vertex e : this.neighbors){
+            neighbors += '[';
+            neighbors += e.getName();
+            neighbors += ']';
+        }
+        return  "[" + name + "]" +
+                 " Neighbors " + neighbors +
+                " State " + state;
     }
 }
