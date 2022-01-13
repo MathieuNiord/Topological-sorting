@@ -82,7 +82,7 @@ public class Utils {
 
             while(successor != 0){
                 if(isValidSuccessor(order, i, successor)){
-                    answer.getVertices()[i-1].addSuccessor(answer.getVertices()[successor-1]);
+                    answer.addArrow(i,successor);
                     successor = getIntegerInput();
                 }
                 else throw new RuntimeException("Invalid successor value");

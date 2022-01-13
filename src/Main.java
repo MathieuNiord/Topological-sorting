@@ -9,9 +9,6 @@
 | its vertices will be instantiated.                  |
  ----------------------------------------------------- */
 
-import java.util.ArrayList;
-import java.util.Stack;
-
 public class Main {
 
     /**
@@ -23,19 +20,10 @@ public class Main {
      * @param args : A file corresponding to a graph to sort
      */
     public static void main(String[] args) {
-        /* TODO :
-            1. Get graph's order [READING]
-            2. Instantiate the graph [PROCESSING]
-            3. Linked the vertices [READING & PROCESSING]
-            4. Topological sorting [PROCESSING]
-            5. Display different results [DISPLAYING]
-        */
-
-        //1. Get graph's order [READING]
 
         Graph graph = Utils.initGraphWithInputs();
 
-        graph.topologicSort();
+        graph.topologicalSort();
 
     }
 

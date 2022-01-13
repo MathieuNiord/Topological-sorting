@@ -1,12 +1,40 @@
-/* Authors: Frejoux Gaetan & Niord Mathieu */
-
-/* --------------------------------------
-| This class corresponds to a graph.     |
-| A graph consists of an order (integer) |
-| and a bounded array of vertices.       |
- ---------------------------------------- */
-
+/**
+ * This class corresponds to a graph.
+ * A graph consists of an order (integer)
+ * and a bounded array of vertices.
+ * @author Gaetan Frejoux && Mathieu Niord
+ */
 public class Graph {
+
+    private enum State {
+        GREEN,
+        ORANGE,
+        RED
+    }
+
+    private class Vertex {
+
+        // --- Attributes ---
+        private final int name;
+        private final MyLinkedList<Vertex> neighbors;
+        private State state;
+        private Vertex dad;
+
+        // --- Constructor ---
+        public Vertex(int name) {
+            this.name = name;
+            this.neighbors = new MyLinkedList<>();
+            this.state = State.GREEN;
+        }
+
+        // --- Others ---
+        public void addSuccessor(Vertex successor){
+            neighbors.addTail(successor);
+        }
+        // --- Display ---
+
+    }
+
     // --- Attributes ---
     private final int order;
     private final Vertex[] vertices;
@@ -20,31 +48,27 @@ public class Graph {
         }
     }
 
-    // --- Getters ---
-    public int getOrder() {
-        return this.order;
-    }
-    public Vertex[] getVertices() {
-        return this.vertices;
-    }
-
-
     // --- Others ---
+    public void addArrow(int from, int to){
+        if(from < 1 || from > order || to < 1 || to > order)
+            throw new IndexOutOfBoundsException();
+        vertices[from-1].addSuccessor(vertices[to-1]);
+    }
 
-    public void topologicSort(){
+    public void topologicalSort(){
 
         MyLinkedList<Vertex> answer = new MyLinkedList<>();
 
         boolean loop = false;
 
         for(int i = 0 ; i < order ; i++)
-            vertices[i].setState(State.GREEN);
+            vertices[i].state = State.GREEN;
 
         for(int i = 0 ; i < order ; i++){
 
-            if(vertices[i].getState().equals(State.GREEN)){
+            if(vertices[i].state.equals(State.GREEN)){
 
-                loop = topologicSortDFS(answer, vertices[i], null);
+                loop = topologicalSortDFS(answer, vertices[i], null);
 
                 if(loop) break;
             }
@@ -53,22 +77,22 @@ public class Graph {
         else System.out.print("Topological sort : ");
         int size = answer.getSize();
         for(int i = 0; i < size-1 ; i++)
-            System.out.print(answer.popHead().getName() + ", ");
+            System.out.print(answer.popHead().name + ", ");
 
         if(size>=0)
-            System.out.println(answer.popHead().getName());
+            System.out.println(answer.popHead().name);
     }
 
-    private boolean topologicSortDFS(MyLinkedList<Vertex> answer, Vertex current, Vertex dad) {
+    private boolean topologicalSortDFS(MyLinkedList<Vertex> answer, Vertex current, Vertex dad) {
 
-        current.setState(State.ORANGE);
-        current.setDad(dad);
-        for(Vertex successor : current.getNeighbors()){
+        current.state = State.ORANGE;
+        current.dad = dad;
+        for(Vertex successor : current.neighbors){
 
-            if(successor.getState().equals(State.GREEN) && topologicSortDFS(answer, successor, current))
+            if(successor.state.equals(State.GREEN) && topologicalSortDFS(answer, successor, current))
                 return true;
 
-            if(successor.getState().equals(State.ORANGE)){
+            if(successor.state.equals(State.ORANGE)){
 
                 answer.clean();
 
@@ -76,7 +100,7 @@ public class Graph {
 
                 do {
                     answer.addHead(loopElement);
-                    loopElement = loopElement.getDad();
+                    loopElement = loopElement.dad;
                 } while (loopElement != null && !loopElement.equals(successor));
 
                 if( loopElement != null)
@@ -86,24 +110,11 @@ public class Graph {
             }
         }
 
-        current.setState(State.RED);
+        current.state = State.RED;
 
         answer.addHead(current);
 
         return false;
     }
 
-    // --- Display ---
-    @Override
-    public String toString() {
-
-        String vertices = "";
-        for(int i = 0; i < order ; i++){
-            vertices += '\t';
-            vertices += this.vertices[i].toString();
-            vertices += '\n';
-        }
-        return  "Order " + order + '\n' +
-                "Vertices \n" + vertices + '\n';
-    }
 }
